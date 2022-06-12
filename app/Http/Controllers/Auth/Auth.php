@@ -57,4 +57,10 @@ class Auth extends Controller
 
         return $responses->ok(["token" => $token], "loged in");
     }
+
+
+    public function test()
+    {
+        return 8;
+    }
 }
