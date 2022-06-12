@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\Auth;
+
+use App\Http\Controllers\Employee\EmpolyeeTypeControler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,5 +26,7 @@ Route::post("/login", [Auth::class, "login"]);
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post("/test", [Auth::class, "test"]);
+    Route::post("/create-employee-type", [EmpolyeeTypeControler::class, "store"]);
+    Route::get("/get-employee-type", [EmpolyeeTypeControler::class, "index"]);
+    Route::get("/get-employee-type/{id}", [EmpolyeeTypeControler::class, "find"]);
 });

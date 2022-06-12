@@ -22,7 +22,7 @@ class Responses
    * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
    */
 
-  public function bad_reauest(array $data, string $message = "Bad request")
+  public function bad_reauest(array $data =  [], string $message = "Bad request")
   {
 
     $this->defaultResponse["message"] = $message;
@@ -35,7 +35,7 @@ class Responses
    * @param array $data array of to send
    * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
    */
-  public function ok(array $data, string $message = "Done")
+  public function ok(array $data =  [], string $message = "Done")
   {
     $this->defaultResponse["auth"] = true;
     $this->defaultResponse["sccess"] = true;
@@ -48,7 +48,7 @@ class Responses
    * @param array $data array of to send
    * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
    */
-  public function conflict(array $data, string $message = "Conflict")
+  public function conflict(array $data = [], string $message = "Conflict")
   {
     $this->defaultResponse["auth"] = true;
     $this->defaultResponse["sccess"] = true;
@@ -61,7 +61,7 @@ class Responses
    * @param array $data array of to send
    * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
    */
-  public function created(array $data, string $message = "Created")
+  public function created(array $data = [], string $message = "Created")
   {
     $this->defaultResponse["auth"] = true;
     $this->defaultResponse["sccess"] = true;
@@ -76,12 +76,34 @@ class Responses
    * @param array $data array of to send
    * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
    */
-  public function public_create(array $data, string $message = "Created")
+  public function public_create(array $data = [], string $message = "Created")
   {
     $this->defaultResponse["sccess"] = true;
     $this->defaultResponse["message"] = $message;
 
     $data = array_merge($data, $this->defaultResponse);
     return Response($data, 201);
+  }
+
+
+  public function send_data(array $data = [], string $message = "")
+  {
+    $this->defaultResponse["sccess"] = true;
+    $this->defaultResponse["message"] = $message;
+    $this->defaultResponse["auth"] = true;
+
+    $data = array_merge($data, $this->defaultResponse);
+    return Response($data, 200);
+  }
+
+  public function data_not_found(string $message = "")
+  {
+    $this->defaultResponse["sccess"] = true;
+    $this->defaultResponse["message"] = $message;
+    $this->defaultResponse["auth"] = true;
+    $this->defaultResponse["list"] = [];
+
+    $data = $this->defaultResponse;
+    return Response($data, 200);
   }
 }
