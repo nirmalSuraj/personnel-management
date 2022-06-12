@@ -2,9 +2,10 @@
 
 namespace App\Services\Responses;
 
+use App\Services\Config\Config;
 use Facade\FlareClient\Http\Response;
 
-class Responses
+class Responses extends Config
 {
 
 
@@ -27,7 +28,7 @@ class Responses
 
     $this->defaultResponse["message"] = $message;
     $data = array_merge($data, $this->defaultResponse);
-    return Response($data, 400);
+    return Response($data, $this->https("bad request"));
   }
 
 
@@ -41,7 +42,7 @@ class Responses
     $this->defaultResponse["sccess"] = true;
     $this->defaultResponse["message"] = $message;
     $data = array_merge($data, $this->defaultResponse);
-    return Response($data, 200);
+    return Response($data,  $this->https("ok"));
   }
 
   /**
@@ -54,7 +55,7 @@ class Responses
     $this->defaultResponse["sccess"] = true;
     $this->defaultResponse["message"] = $message;
     $data = array_merge($data, $this->defaultResponse);
-    return Response($data, 400);
+    return Response($data, $this->https("conflict"));
   }
 
   /**
@@ -68,7 +69,7 @@ class Responses
     $this->defaultResponse["message"] = $message;
 
     $data = array_merge($data, $this->defaultResponse);
-    return Response($data, 201);
+    return Response($data, $this->https("created"));
   }
 
   /**
@@ -82,18 +83,18 @@ class Responses
     $this->defaultResponse["message"] = $message;
 
     $data = array_merge($data, $this->defaultResponse);
-    return Response($data, 201);
+    return Response($data, $this->https("created"));
   }
 
 
-  public function send_data(array $data = [], string $message = "")
+  public function data_found(array $data = [], string $message = "")
   {
     $this->defaultResponse["sccess"] = true;
     $this->defaultResponse["message"] = $message;
     $this->defaultResponse["auth"] = true;
 
     $data = array_merge($data, $this->defaultResponse);
-    return Response($data, 200);
+    return Response($data, $this->https("ok"));
   }
 
   public function data_not_found(string $message = "")
@@ -104,6 +105,36 @@ class Responses
     $this->defaultResponse["list"] = [];
 
     $data = $this->defaultResponse;
-    return Response($data, 200);
+    return Response($data, $this->https("ok"));
+  }
+  /**
+   * @param int $id id of deleted element
+   *  @param string $message by default is deleted
+   */
+  public function deleted(int $id = 0, string $message = "deleted")
+  {
+    $this->defaultResponse["sccess"] = true;
+    $this->defaultResponse["message"] = $message;
+    $this->defaultResponse["auth"] = true;
+    $this->defaultResponse["id"] = $id;
+    $this->defaultResponse["status"] = $id;
+    $data = $this->defaultResponse;
+
+    return Response($data,  200);
+  }
+
+  /**
+   * @param int $id id of deleted element
+   *  @param string $message by default is Recorde is already deleted or does not exist 
+   */
+  public function delete_faild(string $message = "Recorde is already deleted or does not exist .")
+  {
+    $this->defaultResponse["sccess"] = false;
+    $this->defaultResponse["message"] = $message;
+    $this->defaultResponse["auth"] = true;
+
+    $data = $this->defaultResponse;
+
+    return Response($data,  $this->https("conflict"));
   }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
 use App\Models\EmployeeType;
+use App\Services\Config\Config;
 use App\Services\Responses\Responses;
 use Illuminate\Http\Request;
 
@@ -17,14 +18,14 @@ class EmpolyeeTypeControler extends Controller
     public  function index(Responses $responses)
     {
 
-        return  $responses->send_data(["list" => EmployeeType::all()]);
+        return  $responses->data_found(["list" => EmployeeType::all()]);
     }
 
     public function find($id, Responses $responses)
     {
         $data =  EmployeeType::find($id);
         if ($data) {
-            return  $responses->send_data(["list" => EmployeeType::findOrFail($id)]);
+            return  $responses->data_found(["list" => EmployeeType::findOrFail($id)]);
         } else {
             return  $responses->data_not_found();
         }
@@ -45,6 +46,18 @@ class EmpolyeeTypeControler extends Controller
             return $responses->created(["id" => $EmployeeType->id]);
         } else {
             return $responses->bad_reauest();
+        }
+    }
+
+
+
+    public function destroy($id, Responses $responses)
+    {
+        $deleted = EmployeeType::destroy($id);
+        if ($deleted) {
+            return $responses->deleted($id);
+        } else {
+            return $responses->delete_faild();
         }
     }
 }
