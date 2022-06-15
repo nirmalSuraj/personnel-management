@@ -38,6 +38,7 @@ class Auth extends Controller
 
     public function login(Request $request, Responses $responses)
     {
+
         $request->validate([
             'email' => 'required',
             'password' => 'required',
@@ -49,7 +50,7 @@ class Auth extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return $responses->bad_reauest([
-                "errors" => ["email or password incorrect"]
+                "errors" => ["Email or password incorrect"]
             ]);
         }
 
@@ -58,6 +59,14 @@ class Auth extends Controller
         return $responses->ok(["token" => $token], "loged in");
     }
 
+
+    public function isLoged(Request $request, Responses $responses)
+    {
+        $validate = $request->validate(["token" => "required"]);
+
+
+        return $responses->ok(["token" => $request->token], "loged in");
+    }
 
     public function test()
     {
