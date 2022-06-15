@@ -81,7 +81,7 @@ class Responses extends Config
   {
     $this->defaultResponse["sccess"] = true;
     $this->defaultResponse["message"] = $message;
-
+    $this->defaultResponse["auth"] = false;
     $data = array_merge($data, $this->defaultResponse);
     return Response($data, $this->https("created"));
   }
@@ -136,5 +136,15 @@ class Responses extends Config
     $data = $this->defaultResponse;
 
     return Response($data,  $this->https("conflict"));
+  }
+
+  public function Unauthorized()
+  {
+    $this->defaultResponse["sccess"] = false;
+    $this->defaultResponse["message"] = "Unauthorized";
+    $this->defaultResponse["auth"] = false;
+    $data = $this->defaultResponse;
+
+    return Response($data,  $this->https("unauthorized"));
   }
 }

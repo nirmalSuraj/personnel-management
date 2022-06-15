@@ -21,11 +21,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });*/
 
+
 Route::post("/register", [Auth::class, "store"]);
 Route::post("/login", [Auth::class, "login"]);
 
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post("/is-loged", [Auth::class, "isLoged"]);
     Route::post("/create-employee-type", [EmpolyeeTypeControler::class, "store"]);
     Route::get("/get-employee-type", [EmpolyeeTypeControler::class, "index"]);
     Route::get("/get-employee-type/{id}", [EmpolyeeTypeControler::class, "find"]);

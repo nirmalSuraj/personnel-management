@@ -11,7 +11,8 @@ $ConfigArray = [
     "ok" => 200,
     "created" => 201,
     "not found" => 404,
-    "no content" => 204
+    "no content" => 204,
+    "unauthorized" => 401
   ]
 ];
 

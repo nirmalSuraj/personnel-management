@@ -28,7 +28,7 @@ class AddTypeToUserDetailsTable extends Migration
     public function down()
     {
         Schema::table('user_details', function (Blueprint $table) {
-            $table->dropForeign('employee_type_id');
+            $table->dropForeign('user_details_employee_type_id_foreign');
             $table->dropColumn("employee_type_id");
         });
     }
