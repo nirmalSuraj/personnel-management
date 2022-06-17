@@ -17,7 +17,6 @@ class Responses extends Config
 
 
 
-
   /**
    * @param array $data array of to send
    * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
@@ -73,6 +72,21 @@ class Responses extends Config
   }
 
   /**
+   * @param array $data array of to send
+   * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+   */
+  public function updated(array $data = [], string $message = "Updated")
+  {
+    $this->defaultResponse["auth"] = true;
+    $this->defaultResponse["sccess"] = true;
+    $this->defaultResponse["message"] = $message;
+
+    $data = array_merge($data, $this->defaultResponse);
+    return Response($data, $this->https("ok"));
+  }
+
+
+  /**
    * create without login
    * @param array $data array of to send
    * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
@@ -120,7 +134,7 @@ class Responses extends Config
     $this->defaultResponse["status"] = $id;
     $data = $this->defaultResponse;
 
-    return Response($data,  200);
+    return Response($data,  $this->https("ok"));
   }
 
   /**
