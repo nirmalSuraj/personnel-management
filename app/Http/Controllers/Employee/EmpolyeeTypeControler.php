@@ -49,6 +49,22 @@ class EmpolyeeTypeControler extends Controller
         }
     }
 
+    public function Edit(Request $request, Responses $responses)
+    {
+        $request->validate([
+            "id" => "required|integer",
+            "type" => "required|string"
+        ]);
+
+
+
+        $affectedRow =  EmployeeType::where("id", $request->id)->update(["type" => $request->type]);
+        if ($affectedRow) {
+            return $responses->updated(["id" => $request->id]);
+        } else {
+            return $responses->bad_reauest();
+        }
+    }
 
 
     public function destroy($id, Responses $responses)

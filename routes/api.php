@@ -32,4 +32,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get("/get-employee-type", [EmpolyeeTypeControler::class, "index"]);
     Route::get("/get-employee-type/{id}", [EmpolyeeTypeControler::class, "find"]);
     Route::delete("/delete-employee-type/{id}", [EmpolyeeTypeControler::class, "destroy"]);
+    Route::put("/update-employee-type", [EmpolyeeTypeControler::class, "edit"]);
 });
