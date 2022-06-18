@@ -13,4 +13,9 @@ class EmployeeType extends Model
     // protected $table = "employee_types";
 
     protected $fillable = ["type"];
+
+    public function user_details()
+    {
+        return $this->hasMany(UserDetails::class);
+    }
 }

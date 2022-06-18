@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\Auth;
 
 use App\Http\Controllers\Employee\EmpolyeeTypeControler;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,4 +34,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get("/get-employee-type/{id}", [EmpolyeeTypeControler::class, "find"]);
     Route::delete("/delete-employee-type/{id}", [EmpolyeeTypeControler::class, "destroy"]);
     Route::put("/update-employee-type", [EmpolyeeTypeControler::class, "edit"]);
+
+
+    /**  users crud */
+    Route::get("/users", [UserController::class, "index"]);
+    Route::get("/users/{id}", [UserController::class, "find"]);
+    Route::post("/users", [UserController::class, "store"]);
+    Route::put("/users", [UserController::class, "edit"]);
+    Route::delete("/users/{id}", [UserController::class, "destroy"]);
 });
