@@ -152,6 +152,21 @@ class Responses extends Config
     return Response($data,  $this->https("conflict"));
   }
 
+  /**
+   * @param int $id id of deleted element
+   *  @param string $message by default is Recorde is already deleted or does not exist 
+   */
+  public function create_faild(string $message = "fail to create")
+  {
+    $this->defaultResponse["sccess"] = false;
+    $this->defaultResponse["message"] = $message;
+    $this->defaultResponse["auth"] = true;
+
+    $data = $this->defaultResponse;
+
+    return Response($data,  $this->https("conflict"));
+  }
+
   public function Unauthorized()
   {
     $this->defaultResponse["sccess"] = false;
