@@ -18,7 +18,13 @@ class EmpolyeeTypeControler extends Controller
     public  function index(Responses $responses)
     {
 
-        return  $responses->data_found(["list" => EmployeeType::all()]);
+        return  $responses->data_found(["list" => EmployeeType::paginate(5)]);
+    }
+
+
+    public  function dropDown(Responses $responses)
+    {
+        return  $responses->data_found(["list" => EmployeeType::select("type", "id")->get()]);
     }
 
     public function find($id, Responses $responses)

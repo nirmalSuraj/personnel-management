@@ -25,7 +25,7 @@ class UserDetails extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function EmployeeType()
+    public function employeeType()
     {
         return $this->belongsTo(EmployeeType::class);
     }

@@ -19,7 +19,11 @@ class UserController extends Controller
 
     public function index(Responses $responses)
     {
-        $data = User::with("userDetails")->paginate(10);
+        $data = User::select("id", "name", "email")
+            ->with([
+                "userDetails:id,user_id,national_insurance,kids,perform_hours,relationship,salary_per_hour"
+            ])
+            ->paginate(10);
 
         return $responses->data_found(["list" => $data]);
     }
