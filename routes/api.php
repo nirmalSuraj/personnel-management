@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\Auth;
 
 use App\Http\Controllers\Employee\EmpolyeeTypeControler;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Schedule\ScheduleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -44,4 +45,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("/users", [UserController::class, "store"]);
     Route::put("/users", [UserController::class, "edit"]);
     Route::delete("/users/{id}", [UserController::class, "destroy"]);
+
+
+    /**  create planning */
+    Route::post("/schedule", [ScheduleController::class, "store"]);
+    Route::get("/schedule/{id}", [ScheduleController::class, "find"]);
 });

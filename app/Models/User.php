@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->hasMany(UserDetails::class);
     }
 
+    public function WorkingHours()
+    {
+        return $this->hasMany(WorkingHours::class);
+    }
+
     // this is a recommended way to declare event handlers
     public static function boot()
     {
