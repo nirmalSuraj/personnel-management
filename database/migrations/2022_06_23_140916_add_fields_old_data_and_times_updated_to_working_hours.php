@@ -14,8 +14,8 @@ class AddFieldsOldDataAndTimesUpdatedToWorkingHours extends Migration
     public function up()
     {
         Schema::table('working_hours', function (Blueprint $table) {
-            $table->text("old_data");
-            $table->integer("times_updated");
+            $table->text("old_data")->nullable();
+            $table->integer("times_updated")->nullable();
         });
     }
 

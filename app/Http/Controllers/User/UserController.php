@@ -28,6 +28,14 @@ class UserController extends Controller
         return $responses->data_found(["list" => $data]);
     }
 
+    public function DropDown(Responses $responses)
+    {
+        $data = User::select("id", "name")->orderBy("id", "DESC")
+            ->get();
+
+        return $responses->data_found(["list" => $data]);
+    }
+
     public function find($id, Responses $responses)
     {
 

@@ -27,10 +27,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post("/register", [Auth::class, "store"]);
 Route::post("/login", [Auth::class, "login"]);
 
+/** this rout is only for employee-admin */
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'ability:employee-admin'])->group(function () {
+
     Route::post("/is-loged", [Auth::class, "isLoged"]);
-    Route::post("/create-employee-type", [EmpolyeeTypeControler::class, "store"]);
+    Route::post("/create-employee-type", [EmpolyeeTypeControler::class, "store"]);;
     Route::get("/get-employee-type", [EmpolyeeTypeControler::class, "index"]);
     Route::get("/get-employee-type/{id}", [EmpolyeeTypeControler::class, "find"]);
     Route::delete("/delete-employee-type/{id}", [EmpolyeeTypeControler::class, "destroy"]);
@@ -45,9 +47,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("/users", [UserController::class, "store"]);
     Route::put("/users", [UserController::class, "edit"]);
     Route::delete("/users/{id}", [UserController::class, "destroy"]);
+    Route::get("/users/drop-down-users/all", [UserController::class, "DropDown"]);
 
 
     /**  create planning */
     Route::post("/schedule", [ScheduleController::class, "store"]);
-    Route::get("/schedule/{id}", [ScheduleController::class, "find"]);
+});
+
+/** this rout is for employee-waiter and employee-admin */
+
+Route::middleware(['auth:sanctum', 'ability:employee-waiter,employee-admin'])->group(function () {
+    Route::get("/schedule/{id?}/{date?}", [ScheduleController::class, "find"]);
 });
