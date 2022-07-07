@@ -119,7 +119,7 @@ class Responses extends Config
     $this->defaultResponse["list"] = [];
 
     $data = $this->defaultResponse;
-    return Response($data, $this->https("ok"));
+    return Response($data, $this->https("not found"));
   }
   /**
    * @param int $id id of deleted element

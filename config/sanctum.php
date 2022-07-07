@@ -43,8 +43,13 @@ return [
     | not expire. This won't tweak the lifetime of first-party sessions.
     |
     */
+<<<<<<< Updated upstream
 
     'expiration' => 525600,
+=======
+    //525600
+    'expiration' => 30,
+>>>>>>> Stashed changes
 
     /*
     |--------------------------------------------------------------------------
