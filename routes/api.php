@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\Auth;
 
 use App\Http\Controllers\Employee\EmpolyeeTypeControler;
+use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,4 +45,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("/users", [UserController::class, "store"]);
     Route::put("/users", [UserController::class, "edit"]);
     Route::delete("/users/{id}", [UserController::class, "destroy"]);
+
+
+    /**Payments */
+    Route::get("/payment", [PaymentController::class, "index"]);
+    Route::get("/payment/all", [PaymentController::class, "all"]);
 });
