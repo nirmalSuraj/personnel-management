@@ -21,8 +21,8 @@ class ScheduleController extends Controller
         $request->validate([
             [
                 "break" => "required|integer",
-                "from" => "required|date|min:3",
-                "till" => "nullable|date|min:3",
+                "from" => "required|date",
+                "till" => "nullable|date",
                 "user_id" => "required|integer"
             ]
 
@@ -34,7 +34,7 @@ class ScheduleController extends Controller
     public function Store(Request $request, Responses $responses)
     {
         $this->Validation($request);
-        $exists = User::with("userDetails:user_id,salary_per_hour")->find($request->employee_type_id);
+        $exists = User::with("userDetails:user_id,salary_per_hour")->find($request->user_id);
         if (!$exists) {
             return $responses->data_not_found("User Not found");
         }
@@ -43,16 +43,14 @@ class ScheduleController extends Controller
 
             return $responses->bad_reauest([], "Start and end dates are not correct");
         }
-        $request->from =  new \DateTime($request->from);
-        $request->till =  new \DateTime($request->till);
 
         $created =  WorkingHours::create([
             "break" => $request->break,
-            "from" =>   $request->from->format("Y-m-d H:i:s"),
-            "till" => $request->till->format("Y-m-d H:i:s"),
+            "from" => $request->from,
+            "till" => $request->till,
             "month" => $request->month,
-            "user_id" => $request->employee_type_id,
-            "salary_per_hour" => $exists->userDetails[0]->salary_per_hour ?? 0,
+            "user_id" => $request->user_id,
+            "salary_per_hour" => $exists->userDetails[0]->salary_per_hour,
             "times_updated" => 0
         ]);
 
