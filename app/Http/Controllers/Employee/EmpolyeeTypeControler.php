@@ -8,8 +8,6 @@ use App\Services\Config\Config;
 use App\Services\Responses\Responses;
 use Illuminate\Http\Request;
 
-use function PHPUnit\Framework\returnSelf;
-
 class EmpolyeeTypeControler extends Controller
 {
 
@@ -75,11 +73,16 @@ class EmpolyeeTypeControler extends Controller
 
     public function destroy($id, Responses $responses)
     {
-        $deleted = EmployeeType::destroy($id);
-        if ($deleted) {
-            return $responses->deleted($id);
+
+        if (EmployeeType::where("id", "=", $id)->get()) {
+            $deleted = EmployeeType::destroy($id);
+            if ($deleted) {
+                return $responses->deleted($id);
+            } else {
+                return $responses->delete_faild();
+            }
         } else {
-            return $responses->delete_faild();
+            return $responses->delete_faild("This type was deleted.");
         }
     }
 }

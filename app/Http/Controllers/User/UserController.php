@@ -22,8 +22,16 @@ class UserController extends Controller
         $data = User::select("id", "name", "email")
             ->with([
                 "userDetails:id,user_id,national_insurance,kids,perform_hours,relationship,salary_per_hour"
-            ])
+            ])->orderBy("id", "DESC")
             ->paginate(10);
+
+        return $responses->data_found(["list" => $data]);
+    }
+
+    public function DropDown(Responses $responses)
+    {
+        $data = User::select("id", "name")->orderBy("id", "DESC")
+            ->get();
 
         return $responses->data_found(["list" => $data]);
     }
@@ -48,7 +56,7 @@ class UserController extends Controller
         $ruls =   [
             "users" => "required|array",
             "users.*.name" => "required|string",
-            "users.*.email" => "required|string|email|unique:users,email",
+
             "details" => "required|array",
             "details.*.national_insurance" => "required|string",
             "details.*.kids" => "integer",
@@ -61,9 +69,11 @@ class UserController extends Controller
         $action =  explode("@", Route::currentRouteAction())[1];
         if ($action == "store") {
             $ruls["users.*.password"] = "required|string";
+            $ruls["users.*.email"] =  "required|string|email|unique:users,email";
         }
         if ($action == "edit") {
             $ruls["users.*.id"] = "required|integer";
+            $ruls["users.*.email"] =  "required|string|email";
         }
 
         $request->validate($ruls);
@@ -77,6 +87,7 @@ class UserController extends Controller
                 return $responses->conflict(["id" => $arr["employee_type_id"]], "Employee type does not exits");
             };
         }
+
         $inserted =  $users->Create($request->all());
 
         if (count($inserted)) {

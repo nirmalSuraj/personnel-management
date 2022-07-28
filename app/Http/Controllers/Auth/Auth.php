@@ -45,8 +45,11 @@ class Auth extends Controller
 
         ]);
 
-        $user = User::where('email', $request->email)->first();
-
+        $user = User::with("userDetails:user_id,employee_type_id", "userDetails.employeeType:id,type")->where('email', $request->email)->first();
+        $type = "";
+        if ($user) {
+            $type = $user->type . "-" . $user->userDetails[0]->employeeType->type;
+        }
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return $responses->bad_reauest([
@@ -54,9 +57,9 @@ class Auth extends Controller
             ]);
         }
 
-        $token = $user->createToken("token")->plainTextToken;
+        $token = $user->createToken("token", [strtolower($type)])->plainTextToken;
 
-        return $responses->ok(["token" => $token], "loged in");
+        return $responses->ok(["token" => $token, "type" =>  strtolower($type), "id" => $user->id], "loged in");
     }
 
 

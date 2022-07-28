@@ -15,7 +15,7 @@ class PaymentService
   private int $month;
   private int $year;
 
-  public function calPerMonth(string $month, int $year): PaymentService
+  public function CalPerMonth(string $month, int $year): PaymentService
   {
 
     $this->month = $this->GetMonthsNum($month);

@@ -27,6 +27,6 @@ class UserDetails extends Model
 
     public function employeeType()
     {
-        return $this->belongsTo(EmployeeType::class);
+        return $this->belongsTo(EmployeeType::class, "employee_type_id");
     }
 }

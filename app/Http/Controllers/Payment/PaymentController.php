@@ -30,7 +30,8 @@ class PaymentController extends Controller
 
         $this->validates($request);
         try {
-            $data = $getPayments->calPerMonth($request->month, $request->year)->GetPaymentByUser($request->user_id);
+            $data = $getPayments->CalPerMonth($request->month, $request->year)
+                ->GetPaymentByUser($request->user_id);
         } catch (MonthNotFoundExpextion $e) {
             return $responses->conflict();
         }
@@ -42,7 +43,7 @@ class PaymentController extends Controller
     {
 
         try {
-            $data = $getPayments->calPerMonth("july", 2022)->GetPaymentByAll();
+            $data = $getPayments->CalPerMonth($request->month, $request->year)->GetPaymentByAll();
         } catch (MonthNotFoundExpextion $e) {
             return $responses->conflict();
         }
