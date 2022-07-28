@@ -35,6 +35,7 @@ class ScheduleController extends Controller
     {
         $this->Validation($request);
         $exists = User::with("userDetails:user_id,salary_per_hour")->find($request->user_id);
+
         if (!$exists) {
             return $responses->data_not_found("User Not found");
         }

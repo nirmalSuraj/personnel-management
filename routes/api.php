@@ -29,8 +29,8 @@ Route::post("/register", [Auth::class, "store"]);
 Route::post("/login", [Auth::class, "login"]);
 
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post("/is-loged", [Auth::class, "isLoged"]);
+Route::middleware(['auth:sanctum', 'ability:employee-admin'])->group(function () {
+    //Route::post("/is-loged", [Auth::class, "isLoged"]);
     Route::post("/create-employee-type", [EmpolyeeTypeControler::class, "store"]);;
     Route::get("/get-employee-type", [EmpolyeeTypeControler::class, "index"]);
     Route::get("/get-employee-type/{id}", [EmpolyeeTypeControler::class, "find"]);
